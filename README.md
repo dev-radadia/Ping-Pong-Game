@@ -2,9 +2,9 @@
 
 The aim of the project is to create a ping-pong game having a two ‘2 Players’ game-mode with a smooth, intuitive gameplay.
 
-NOTE : Before running "The Game.py", change the value of the variable 'Password' to your current MySQL password in 'r.db_info.py' file.
+**NOTE:** Before running "The Game.py", change the value of the variable 'Password' to your current MySQL password in 'r.db_info.py' file.
 
-Salient Features :
+## Salient Features :
 
 	1. The project is divided into 5 packages :
 		a. image - Contains the images used in the project
