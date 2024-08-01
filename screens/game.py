@@ -7,6 +7,8 @@ from sprites.Label import *
 from sprites.Button import *
 from sprites.PauseButton import *
 
+from ai.qlearner import *
+
 import r
 
 from r.main import *
@@ -49,6 +51,10 @@ class GameScreen():
 
         self.p1Name = "Player1"
         self.p2Name = "Player2"
+        
+        self.p2ai = False
+        self.ai = QLearner(2,12)
+        self.ai.loadMemory("ai/mem")
 
         self.winnerName = "Winner"
         self.winnerColor = fg_color_default
@@ -158,9 +164,17 @@ class GameScreen():
             if keys[pygame.K_s]:
                 self.paddle1.moveDown(self.paddle_speed)
 
-            if keys[pygame.K_UP]:
+            if self.p2ai:
+                self.ai.updateIntent(self.getGameState())
+                aimove=self.ai.getIntent()
+                if aimove==I_UP:
                     self.paddle2.moveUp(self.paddle_speed)
-            if keys[pygame.K_DOWN]:
+                if aimove==I_DOWN:
+                    self.paddle2.moveDown(self.paddle_speed)
+            else: 
+                if keys[pygame.K_UP]:
+                    self.paddle2.moveUp(self.paddle_speed)
+                if keys[pygame.K_DOWN]:
                     self.paddle2.moveDown(self.paddle_speed)
 
             if keys[pygame.K_ESCAPE]:
@@ -289,6 +303,12 @@ class GameScreen():
 
         self.paddle1=Paddle(self.screen_dimen, self.paddle_dimen, self.score_margin, self.color1)
         self.paddle2=Paddle(self.screen_dimen, self.paddle_dimen, self.score_margin, self.color2)
+
+    def enableAi(self):
+        self.p2ai=True
+        
+    def disableAi(self):
+        self.p2ai=False
 
     def getWinnerColor(self):
         return self.winnerColor

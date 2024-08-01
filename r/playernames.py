@@ -1,5 +1,8 @@
 playernames_label_txt = "Player Names"
 
+p_label_txt = "Player"
+ai_label_txt = "Computer"
+
 p1_label_txt = "Player 1"
 p2_label_txt = "Player 2"
 

@@ -7,7 +7,8 @@ from sprites.Border import *
 from sprites.Label import *
 from sprites.Button import *
 
-CB_START = 1
+CB_1PLAYER = 1
+CB_2PLAYERS = 2
 CB_QUIT = -1
 CB_ABOUT = 7
 
@@ -24,13 +25,21 @@ class MainMenuScreen():
     def show_menu(self):
         game_name = Label(self.screen, pygame.Rect(90, 100, 1000 ,1000), self.fg_color, self.bg_color, self.font, text=self.gamename)
 
-        start_btn = Button(
-            center_position=(r.game.SCREEN_WIDTH/2, 430),
+        Player1_btn = Button(
+            center_position=(r.game.SCREEN_WIDTH/4, 430),
             font_size=r.font_size.m,
             bg_rgb=r.colors.BLACK,
             text_rgb=r.colors.WHITE,
-            text=r.main.r_start_button_txt,
-            action=CB_START,
+            text=r.main.r_1Player_txt,
+            action=CB_1PLAYER,
+        )
+        Players2_btn = Button(
+            center_position=(3*(r.game.SCREEN_WIDTH/4), 430),
+            font_size=r.font_size.m,
+            bg_rgb=r.colors.BLACK,
+            text_rgb=r.colors.WHITE,
+            text=r.main.r_2Players_txt,
+            action=CB_2PLAYERS,
         )
         about_btn=Button( 
             center_position=(r.game.SCREEN_WIDTH/2, 515),
@@ -49,7 +58,7 @@ class MainMenuScreen():
             action=CB_QUIT,
         )
         
-        buttons = [start_btn, about_btn, quit_btn]
+        buttons = [Player1_btn, Players2_btn, about_btn, quit_btn]
 
         while True:
             mouse_up = False

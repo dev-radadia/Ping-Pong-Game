@@ -13,6 +13,7 @@ from sprites.Textbox import *
 
 CB_RETURN = 101
 CB_PLAY = 104
+CB_PLAY_AI=105
 
 BLUE=0
 PINK=1
@@ -29,14 +30,16 @@ COLOR_LIST=[r.colors.BLUE,r.colors.PINK,r.colors.GREEN,r.colors.YELLOW,r.colors.
 _color_default=(255,255,255)
 
 class PlayerNamesScreen():
-    def __init__(self, screen, playernames, player1, player2, name, screen_dimen, bg_color, fg_color, fontsize1 = r.font_size.l, fontsize2 = r.font_size.m, fontsize3 = r.font_size.xs, bg=None):
+    def __init__(self, screen, playernames, player1_1, player2_1, player1_2, player2_2, name, screen_dimen, bg_color, fg_color, fontsize1 = r.font_size.l, fontsize2 = r.font_size.m, fontsize3 = r.font_size.xs, bg=None):
         self.screen = screen
         self.screen_dimen = screen_dimen
         self.bg_color = bg_color
         self.fg_color = fg_color
         self.playernames = playernames
-        self.player1 = player1
-        self.player2 = player2
+        self.player1_1 = player1_1
+        self.player2_1 = player2_1
+        self.player1_2 = player1_2
+        self.player2_2 = player2_2
         self.name = name
         self.font1 = pygame.font.Font("r\\font_styles\Courier Bold Italic.ttf", fontsize1)
         self.font2 = pygame.font.Font("r\\font_styles\Courier Italic.ttf", fontsize2)
@@ -44,16 +47,112 @@ class PlayerNamesScreen():
         self.playersReset()
         self.bgimg = bg
 
-    def Players_Names(self):
+    def Player1_Name(self):
+        self.playersReset()
+
+        ai_color = random.randint(5,9)
+
+        Player_Names = Label(self.screen, pygame.Rect(165, 10, 1000 ,1000), self.fg_color, self.bg_color, self.font1, text=self.playernames)
+        
+        Player = Label(self.screen, pygame.Rect(120, 100, 1000 ,1000), self.fg_color, self.bg_color, self.font2, text=self.player1_1)
+
+        Name1 = Label(self.screen, pygame.Rect(15, 187, 1000 ,1000), self.fg_color, self.bg_color, self.font3, text=self.name)
+
+        Computer = Label(self.screen, pygame.Rect(535, 100, 1000 ,1000), self.fg_color, self.bg_color, self.font2, text=self.player2_1)
+
+        Name2 = Label(self.screen, pygame.Rect(465, 187, 1000 ,1000), self.fg_color, self.bg_color, self.font3, text=self.name)
+
+        enter_btn = Button(
+            center_position = (SCREEN_WIDTH/2, 550),
+            font_size = r.font_size.s,
+            bg_rgb = r.colors.BLACK,
+            text_rgb = r.colors.WHITE,
+            text = enter_button_txt,
+            action = CB_PLAY_AI,
+        )
+        
+        return_to_mainmenu_btn = Button(
+            center_position = (r.game.SCREEN_WIDTH/2, 620),
+            font_size = r.font_size.s,
+            bg_rgb = r.colors.BLACK,
+            text_rgb = r.colors.WHITE,
+            text = return_to_mainmenu_button_txt,
+            action=CB_RETURN,
+        )
+
+        self.setColorButtons()
+
+        buttons = [self.Blue1, self.Green1, self.Yellow1, self.Pink1, self.Red1, self.Blue2, self.Green2, self.Yellow2, self.Pink2, self.Red2, enter_btn, return_to_mainmenu_btn]
+
+        self.Blue2.setHighlightable(False)
+        self.Green2.setHighlightable(False)
+        self.Yellow2.setHighlightable(False)
+        self.Pink2.setHighlightable(False)
+        self.Red2.setHighlightable(False)
+
+        Human = Textbox(180, 190, 200, 30)
+        AI = Textbox(SCREEN_WIDTH/2+180, 190, 200, 30, text="AI")
+
+        while True:
+            mouse_up = False
+            events = pygame.event.get()
+            for event in events:
+                if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                    mouse_up = True
+                    
+            self.screen.fill(r.game.BLACK)
+
+            self.handleColorClick(COLOR_BTN_ACTIONS[ai_color])
+
+            if self.bgimg is not None:
+                self.screen.blit(self.bgimg,(0,0))
+
+            for button in buttons:
+                button_action = button.update(pygame.mouse.get_pos(), mouse_up)
+
+                if button_action is not None:    
+                    if button_action==CB_PLAY_AI:
+                        self.p1name=Human.getText()
+                        self.p2name=AI.getText()
+                        
+                        for space in range(0,14):
+                            if self.p1name == space * " ":
+                                self.p1name = "Player"
+
+                    if button_action in COLOR_BTN_ACTIONS:
+                        self.handleColorClick(button_action)
+                    else:
+                        return button_action
+
+                pygame.draw.line(self.screen,r.colors.WHITE,[r.game.SCREEN_WIDTH/2,95],[r.game.SCREEN_WIDTH/2,505],5)
+
+                button.draw(self.screen)
+            
+            Human.handle_event(events)
+            Human.draw(self.screen)
+            AI.ai_draw(self.screen)
+            
+            border = Border()
+            border.rectangle(self.screen)
+
+            Player_Names.draw()
+            Player.draw()
+            Name1.draw()
+            Computer.draw()
+            Name2.draw()
+
+            pygame.display.flip()
+
+    def Players2_Names(self):
         self.playersReset()
 
         Player_Names = Label(self.screen, pygame.Rect(165, 10, 1000 ,1000), self.fg_color, self.bg_color, self.font1, text=self.playernames)
         
-        Player1 = Label(self.screen, pygame.Rect(80, 100, 1000 ,1000), self.fg_color, self.bg_color, self.font2, text=self.player1)
+        Player1 = Label(self.screen, pygame.Rect(80, 100, 1000 ,1000), self.fg_color, self.bg_color, self.font2, text=self.player1_2)
 
         Name1 = Label(self.screen, pygame.Rect(15, 187, 1000 ,1000), self.fg_color, self.bg_color, self.font3, text=self.name)
 
-        Player2 = Label(self.screen, pygame.Rect(535, 100, 1000 ,1000), self.fg_color, self.bg_color, self.font2, text=self.player2)
+        Player2 = Label(self.screen, pygame.Rect(535, 100, 1000 ,1000), self.fg_color, self.bg_color, self.font2, text=self.player2_2)
 
         Name2 = Label(self.screen, pygame.Rect(465, 187, 1000 ,1000), self.fg_color, self.bg_color, self.font3, text=self.name)
 
