@@ -2,13 +2,13 @@
 
 The project aims to create a ping-pong game with two game modes – **1 Player** and **2 Players** with smooth, intuitive gameplay.
 
-**NOTE:** Before running the "The Game.py" file, change the value of the variable `Password` to your current MySQL password in "db_info.py" file (The file is present inside the 'r' folder).
+**NOTE:** Before running the "The Game.py" file, change the value of the variable `Password` to your current MySQL password in the "db_info.py" file (The file is present inside the 'r' folder).
 
 ## Salient Features :
 
 	1. The project is divided into 5 packages :
-		a. **ai** – Contains the code governing the AI used in 1-player game mode
-		b. **image** - Contains the images used in the project
+		a. ai – Contains the code governing the AI used in 1-player game mode
+		b. image - Contains the images used in the project
 		c. r - Contains the screen-wise strings, resources, and font styles used in the project
 		d. screens - Contains the logic for every screen in the project, with a module for every screen
 		e. sound - Contains the sounds used in the project
